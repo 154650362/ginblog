@@ -7,12 +7,13 @@ func UserExist() {
 
 }
 
-//添加用户
+//添加用户， 调用model的函数
 func AddUser(c *gin.Context) {
 	//todo
+
 }
 
-//查询单个用户
+//查询用户是否存在
 
 //查询用户列表
 func GetUsers(c *gin.Context) {
