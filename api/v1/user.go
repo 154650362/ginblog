@@ -5,6 +5,7 @@ import (
 	"ginblog/utils/errmsg"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 var code int
@@ -32,7 +33,23 @@ func AddUser(c *gin.Context) {
 
 //查询用户列表
 func GetUsers(c *gin.Context) {
+	pageSize, _ := strconv.Atoi(c.Query("pagesize"))
+	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
 
+	if pageSize == 0 {
+		//不要分页功能
+		pageSize = -1
+	}
+	if pageNum == 0 {
+		pageNum = -1
+	}
+	data := model.GetUsers(pageSize, pageNum)
+	code = errmsg.SUCCESS
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"data":    data,
+		"message": errmsg.GetErrMsg(code),
+	})
 }
 
 //编辑用户

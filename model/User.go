@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"ginblog/utils/errmsg"
 	"github.com/jinzhu/gorm"
 )
@@ -18,7 +17,7 @@ func CheckUser(name string) (code int) {
 	var users User
 	//First 查询出第一个参数
 	db.Select("id").Where("username = ?", name).First(&users)
-	fmt.Println(users.ID)
+	//fmt.Println(users.ID)
 	if users.ID > 0 { //有记录
 		return errmsg.ERROR_USERNAME_USED
 	}
@@ -38,8 +37,12 @@ func CreateUser(data *User) int {
 func GetUsers(pageSize int, pageNum int) []User {
 	var users []User
 	err = db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users).Error
-	if err != nil {
+	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil
 	}
-	return nil
+	return users
 }
+
+// 编辑用户
+
+// 删除用户
