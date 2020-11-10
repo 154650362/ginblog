@@ -41,4 +41,5 @@ func GetUsers(pageSize int, pageNum int) []User {
 	if err != nil {
 		return nil
 	}
+	return nil
 }
